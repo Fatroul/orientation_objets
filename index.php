@@ -1,10 +1,9 @@
 <?php 
-class Archer {
-    private $nom;
-    private $force;
-    private $health;
-    private $lvl; 
-    private $type;
+class Personnage {
+    protected $nom;
+    protected $force;
+    protected $health;
+    protected $lvl; 
     
 
     function __construct(string $nom, int $force, int $health = 100, int $lvl = 1, string $type){
@@ -12,7 +11,6 @@ class Archer {
         $this->force = $force; 
         $this->health = $health;
         $this->lvl = $lvl;
-        $this->type = $type;
     }
 
     public function alive() {
@@ -26,71 +24,7 @@ class Archer {
 
 
     public function caracteristiques() {
-echo "Le personnage ".$this->nom." est de type ".$this->type." a une force de ".$this->force." lvl ".$this->lvl." et est ".$this->alive()."."."<br>";
-    }
-
-    function getNom() : string {
-        return $this->nom;
-    }
-    function setNom(string $nom){
-        $this->nom = $nom;
-    }
-    function getLvl() : int {
-        return $this->lvl;
-    }
-    function setLvl(int $lvl){
-        $this->lvl = $lvl;
-    }
-    function getHealth() : int {
-        return $this->health;
-    }
-    function setHealth(int $health){
-        $this->health = $health;
-    }
-
-    function attack($perso) { 
-        $this->arrow();
-        $perso->setHealth($perso->getHealth()-$this->force);
-    }
-
-    function arrow() {
-        echo "L'archer décoche une flècheé";
-    }
-
-    function lvlup(Personnage $perso) {
-        $perso->setLvl($perso->getLvl()+1);
-    }
-    
-}
-
-class Warrior {
-    private $nom;
-    private $force;
-    private $health;
-    private $lvl; 
-    private $type;
-    
-
-    function __construct(string $nom, int $force, int $health = 100, int $lvl = 1, string $type){
-        $this->nom = $nom;
-        $this->force = $force; 
-        $this->health = $health;
-        $this->lvl = $lvl;
-        $this->type = $type;
-    }
-
-    public function alive() {
-    if($this->health > 0) {
-        $vie = "vivant";
-    }else {
-        $vie = "mort";
-        }
-        return $vie;
-    }
-
-
-    public function caracteristiques() {
-echo "Le personnage ".$this->nom." est de type ".$this->type." a une force de ".$this->force." lvl ".$this->lvl." et est ".$this->alive()."."."<br>";
+echo "Le personnage ".$this->nom." a une force de ".$this->force." lvl ".$this->lvl." et est ".$this->alive()."."."<br>";
     }
 
     function getNom() : string {
@@ -113,82 +47,47 @@ echo "Le personnage ".$this->nom." est de type ".$this->type." a une force de ".
     }
 
     function attack(Personnage $perso) {
-        $this->beat();
         $perso->setHealth($perso->getHealth()-$this->force);
-    }
-
-    function beat() {
-        echo "Le guerrier agresse violemment l'ennemi";
     }
 
     function lvlup(Personnage $perso) {
         $perso->setLvl($perso->getLvl()+1);
     }
-    
+ 
 }
 
-class Mage {
-    private $nom;
-    private $force;
-    private $health;
-    private $lvl; 
-    private $type;
-    
-
-    function __construct(string $nom, int $force, int $health = 100, int $lvl = 1, string $type){
-        $this->nom = $nom;
-        $this->force = $force; 
-        $this->health = $health;
-        $this->lvl = $lvl;
-        $this->type = $type;
+class Archer extends Personnage {
+    function attack(Personnage $perso) {
+        $this->shot();
+        parent::attack($perso);
     }
 
-    public function alive() {
-    if($this->health > 0) {
-        $vie = "vivant";
-    }else {
-        $vie = "mort";
-        }
-        return $vie;
+    function shot() {
+        echo $this->nom." de type ".Archer::class. "décoche une flèche.<br>";
     }
 
+}
 
-    public function caracteristiques() {
-echo "Le personnage ".$this->nom." est de type ".$this->type." a une force de ".$this->force." lvl ".$this->lvl." et est ".$this->alive()."."."<br>";
-    }
-
-    function getNom() : string {
-        return $this->nom;
-    }
-    function setNom(string $nom){
-        $this->nom = $nom;
-    }
-    function getLvl() : int {
-        return $this->lvl;
-    }
-    function setLvl(int $lvl){
-        $this->lvl = $lvl;
-    }
-    function getHealth() : int {
-        return $this->health;
-    }
-    function setHealth(int $health){
-        $this->health = $health;
+class Warrior extends Personnage {
+    function attack(Personnage $perso) {
+        $this->punch();
+        parent::attack($perso);
     }
 
-    function attack( $perso) {
-        $this->thrown();
-        $perso->setHealth($perso->getHealth()-$this->force);
+    function punch() {
+        echo $this->nom." de type ".Warrior::class. "frappe l'ennemi.<br>";
+    }
+}
+
+class Mage extends Personnage {
+    function attack(Personnage $perso) {
+        $this->thrownSort();
+        parent::attack($perso);
     }
 
-    function thrown() {
-        echo "Le mage a jeté un sort";
+    function thrownSort() {
+        echo $this->nom." de type ".Mage::class. "frappe l'ennemi.<br>";
     }
-
-    function lvlup($perso) {
-        $perso->setLvl($perso->getLvl()+1);
-    }
-    
 }
 
 $perso1 = new archer("Rose", 12, 100, 1,"archer");
