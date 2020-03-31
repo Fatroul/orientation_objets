@@ -28,18 +28,25 @@ class Personnage {
 echo "Le personnage ".$this->nom." a une force de ".$this->force." lvl ".$this->lvl." et est ".$this->alive();
     }
 
-    function getNom() string {
+    function getNom() : string {
         return $this->nom;
     }
     function setNom(string $nom){
         $this->nom = $nom;
-
     }
-    function getLvl() int {
+    function getLvl() : int {
         return $this->lvl;
     }
-    function setNom(int $lvl){
+    function setLvl(int $lvl){
         $this->lvl = $lvl;
+    }
+    function getHealth() : int {
+        return $this->health;
+    }
+    function setHealth(int $health){
+        $this->health = $health;
+    }
+
 }
 
 $perso1 = new Personnage("Rose", 12, 100);
@@ -49,8 +56,19 @@ $perso2 = new Personnage("Golbu", 15, 100, 2);
 $perso3 = new Personnage("Arthis", 13, 0, 2);
 
 
-$perso2->setNom("Jacquouille");
-echo $perso2->getNom(); 
+function attack() {
+    $damage = rand(1,100);
+    setHealth(int $health){getHealth($perso1)-$damage;}
+    return $health;
+}
+
+if(attack($perso1)){
+    echo $perso1->getHealth();
+}
+
+
+//$perso2->setNom("Jacquouille");
+//echo $perso2->getNom();
 //$perso3->caracteristiques();
 
 ?>
