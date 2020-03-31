@@ -6,7 +6,7 @@ class Personnage {
     private $lvl; 
     
 
-    function __construct(string $nom, int $force, int $health, int $lvl = 1){
+    function __construct(string $nom, int $force, int $health = 100, int $lvl = 1){
         $this->nom = $nom;
         $this->force = $force; 
         $this->health = $health;
@@ -25,7 +25,7 @@ class Personnage {
 
 
     public function caracteristiques() {
-echo "Le personnage ".$this->nom." a une force de ".$this->force." lvl ".$this->lvl." et est ".$this->alive();
+echo "Le personnage ".$this->nom." a une force de ".$this->force." lvl ".$this->lvl." et est ".$this->alive()."."."<br>";
     }
 
     function getNom() : string {
@@ -47,24 +47,30 @@ echo "Le personnage ".$this->nom." a une force de ".$this->force." lvl ".$this->
         $this->health = $health;
     }
 
+    function attack(Personnage $perso) {
+        $perso->setHealth($perso->getHealth()-$this->force);
+    }
+
+    function lvlup(Personnage $perso) {
+        $perso->setLvl($perso->getLvl()+1);
+    }
 }
+
 
 $perso1 = new Personnage("Rose", 12, 100);
-
-$perso2 = new Personnage("Golbu", 15, 100, 2);
-
+$perso2 = new Personnage("Golbu", 15, 10, 2);
 $perso3 = new Personnage("Arthis", 13, 0, 2);
 
+/*echo "Avant attaque : ";
+$perso2->caracteristiques();
+echo "Une fois l'attaque effectuée : ";
+$perso1->attack($perso2);
+$perso2->caracteristiques();*/
+$perso3->lvlup($perso3);
+echo "Votre perso a gagné 1 lvl.";
 
-function attack() {
-    $damage = rand(1,100);
-    setHealth(int $health){getHealth($perso1)-$damage;}
-    return $health;
-}
 
-if(attack($perso1)){
-    echo $perso1->getHealth();
-}
+
 
 
 //$perso2->setNom("Jacquouille");
